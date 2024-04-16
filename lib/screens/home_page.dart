@@ -15,6 +15,7 @@ class HomeWidget extends StatelessWidget {
         ),
         centerTitle: true,
         backgroundColor: Colors.green,
+        
       ),
       body: SafeArea(
         child: Column(

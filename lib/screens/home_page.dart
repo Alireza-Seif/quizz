@@ -22,7 +22,7 @@ class HomeWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Image(
-              image: AssetImage('assets/images/1.png'),
+              image: AssetImage('assets/images/welcome.png'),
             ),
             ElevatedButton(
               onPressed: () {

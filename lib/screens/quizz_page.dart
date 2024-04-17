@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizz/constants/Constants.dart';
 import 'package:quizz/data/Questions.dart';
+import 'package:quizz/screens/result_screen.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -13,6 +14,7 @@ class _QuizPageState extends State<QuizPage> {
   int showQuestionIndex = 0;
   Questions? selectedQuestion;
   bool isFinalAnswerSubmited = false;
+  int correctAnswer = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,9 @@ class _QuizPageState extends State<QuizPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Quiz Queen',
-          style: TextStyle(color: Colors.white),
+        title: Text(
+          '${showQuestionIndex + 1} of ${getQuestionsList().length}',
+          style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Colors.green,
@@ -34,6 +36,7 @@ class _QuizPageState extends State<QuizPage> {
       body: SafeArea(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: double.infinity,
@@ -60,7 +63,16 @@ class _QuizPageState extends State<QuizPage> {
                 'View quiz results',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultScreen(
+                      resultAnswer: correctAnswer,
+                    ),
+                  ),
+                );
+              },
             ),
         ],
       )),
@@ -72,12 +84,12 @@ class _QuizPageState extends State<QuizPage> {
       title: Text(selectedQuestion!.answerList![index]),
       onTap: () {
         if (selectedQuestion!.correctAnswer == index) {
-          print('correct');
+          correctAnswer++;
         } else {
           print('wrong');
         }
 
-        if (showQuestionIndex < getQuestionsList().length - 1) {
+        if (showQuestionIndex == getQuestionsList().length - 1) {
           isFinalAnswerSubmited = true;
         }
 

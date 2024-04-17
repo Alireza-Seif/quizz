@@ -1,4 +1,4 @@
-import 'package:quizz/data/questions.dart';
+import 'package:quizz/data/Questions.dart';
 
 List<Questions> getQuestionsList() {
   var firstQuestions = Questions();
@@ -7,10 +7,10 @@ List<Questions> getQuestionsList() {
   firstQuestions.imgaeNameNumber = '1';
   firstQuestions.correctAnswer = 2;
   firstQuestions.answerList = [
-    'Alireza Seif'
-        'David Copperfield'
-        'Harry Houdini'
-        'David Blaine'
+    'Alireza Seif',
+        'David Copperfield',
+        'Harry Houdini',
+        'David Blaine',
   ];
 
   var secondQuestion = Questions();

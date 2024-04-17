@@ -12,6 +12,7 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   int showQuestionIndex = 0;
   Questions? selectedQuestion;
+  bool isFinalAnswerSubmited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +48,20 @@ class _QuizPageState extends State<QuizPage> {
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18),
           ),
-          ...List.generate(
-            4,
-            (index) => getOptionsList(index),
-          ),
+          ...List.generate(4, (index) => getOptionsList(index)),
+          if (isFinalAnswerSubmited)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(200.0, 50.0),
+              ),
+              child: const Text(
+                'View quiz results',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {},
+            ),
         ],
       )),
     );
@@ -65,6 +76,11 @@ class _QuizPageState extends State<QuizPage> {
         } else {
           print('wrong');
         }
+
+        if (showQuestionIndex < getQuestionsList().length - 1) {
+          isFinalAnswerSubmited = true;
+        }
+
         setState(() {
           if (showQuestionIndex < getQuestionsList().length - 1) {
             showQuestionIndex++;

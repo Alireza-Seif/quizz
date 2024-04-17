@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizz/constants/Constants.dart';
+import 'package:quizz/data/Questions.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -10,23 +11,11 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int showQuestionIndex = 0;
-  var list = [
-    const ListTile(
-      title: Text('first option'),
-    ),
-    const ListTile(
-      title: Text('second option'),
-    ),
-    const ListTile(
-      title: Text('third option'),
-    ),
-    const ListTile(
-      title: Text('fourth option'),
-    ),
-  ];
+  Questions? selectedQuestion;
 
   @override
   Widget build(BuildContext context) {
+    selectedQuestion = getQuestionsList()[showQuestionIndex];
     String showImageIndex =
         getQuestionsList()[showQuestionIndex].imgaeNameNumber!;
 
@@ -48,24 +37,40 @@ class _QuizPageState extends State<QuizPage> {
           SizedBox(
             width: double.infinity,
             child: Image(
-              image: AssetImage('assets/images/$showImageIndex.jpg'),
+              image: AssetImage('assets/images/$showImageIndex.png'),
               height: 300,
             ),
           ),
           const SizedBox(height: 30),
           Text(
-            getQuestionsList()[showQuestionIndex].questionTitle!,
+            selectedQuestion!.questionTitle!,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18),
           ),
           ...List.generate(
-              4,
-              (index) => ListTile(
-                    title:
-                        Text(getQuestionsList()[showQuestionIndex].answerList![index]),
-                  )),
+            4,
+            (index) => getOptionsList(index),
+          ),
         ],
       )),
+    );
+  }
+
+  ListTile getOptionsList(int index) {
+    return ListTile(
+      title: Text(selectedQuestion!.answerList![index]),
+      onTap: () {
+        if (selectedQuestion!.correctAnswer == index) {
+          print('correct');
+        } else {
+          print('wrong');
+        }
+        setState(() {
+          if (showQuestionIndex < getQuestionsList().length - 1) {
+            showQuestionIndex++;
+          }
+        });
+      },
     );
   }
 }
